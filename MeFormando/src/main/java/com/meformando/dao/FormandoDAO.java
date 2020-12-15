@@ -47,8 +47,8 @@ public class FormandoDAO {
 		
 			ps.setString(1, f.getpNome());
 			ps.setString(2, f.getuNome());
-			ps.setString(3, f.getCpf());
-			ps.setString(4, f.getEmail());
+			ps.setString(3, f.getEmail());
+			ps.setString(4, f.getCpf());
 			ps.setString(5, f.getSenha()); 
 			ps.setBoolean(6, f.isComissao());
 			ps.setInt(7, f.getId());
