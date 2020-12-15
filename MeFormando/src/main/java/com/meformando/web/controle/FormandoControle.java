@@ -11,4 +11,12 @@ public class FormandoControle {
 	public void adicionar(Formando formando) {
 		formandoDAO.inserir(formando);
 	}
+	
+	public void editar(Formando formando) {
+		formandoDAO.atualizar(formando);
+	}
+	
+	public Formando getPorID(Integer id) {
+		return formandoDAO.selecionar(id);
+	}
 }
