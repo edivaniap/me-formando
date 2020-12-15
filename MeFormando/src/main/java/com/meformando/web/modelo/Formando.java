@@ -8,7 +8,7 @@ public class Formando {
 	private String email;
 	private String senha;
 	private boolean isComissao;
-	//private Turma turma;
+	private Turma turma;
 	
 	public Formando() {
 		pNome = "";
@@ -17,6 +17,7 @@ public class Formando {
 		email = "";
 		senha = "";
 		isComissao = false;
+		turma = null;
 	}
 	
 	public Integer getId() {
@@ -60,6 +61,13 @@ public class Formando {
 	}
 	public void setComissao(boolean isComissao) {
 		this.isComissao = isComissao;
+	}
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 
 	@Override

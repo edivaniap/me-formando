@@ -1,7 +1,5 @@
 package com.meformando.web.controle;
 
-import java.sql.SQLException;
-
 import com.meformando.dao.FormandoDAO;
 import com.meformando.web.modelo.Formando;
 
