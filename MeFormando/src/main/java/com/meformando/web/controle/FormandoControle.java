@@ -17,4 +17,8 @@ public class FormandoControle {
 	public Formando getPorID(Integer id) {
 		return formandoDAO.selecionar(id);
 	}
+	
+	public Formando login(String email, String senha) {
+		return formandoDAO.autenticacao(email, senha);
+	}
 }

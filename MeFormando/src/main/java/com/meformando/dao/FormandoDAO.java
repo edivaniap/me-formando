@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.meformando.web.modelo.Convite;
 import com.meformando.web.modelo.Formando;
 import com.meformando.web.util.ConexaoMySQL;
 
@@ -24,12 +25,13 @@ public class FormandoDAO {
 			
 			ps.setString(1, f.getpNome());
 			ps.setString(2, f.getuNome());
-			ps.setString(3, f.getCpf());
-			ps.setString(4, f.getEmail());
+			ps.setString(3, f.getEmail());
+			ps.setString(4, f.getCpf());
 			ps.setString(5, f.getSenha()); 
 			ps.setBoolean(6, f.isComissao());
 			
 			ps.execute();
+			System.out.println("Cadastrado com sucesso!");
 		} catch (SQLException se) {
 			System.err.println("Erro de SQL: " + se);
 		} catch(Exception e) {
@@ -122,5 +124,62 @@ public class FormandoDAO {
 		
 		ConexaoMySQL.fecharConexao();
 		return flist;
+	}
+	
+	public Formando autenticacao(String email, String senha) {
+		conexao = ConexaoMySQL.getConexao();
+		Formando f = null;
+		try {
+			ps = conexao.prepareCall("SELECT * FROM formando f WHERE f.email = ? AND f.senha = ?");
+		
+			ps.setString(1, email);
+			ps.setString(2, senha);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				f = new Formando();
+				
+				f.setId(rs.getInt("id"));
+				f.setuNome(rs.getString("unome"));
+				f.setpNome(rs.getString("pnome"));
+				f.setCpf(rs.getString("cpf"));
+				f.setEmail(rs.getString("email"));
+				f.setComissao(rs.getBoolean("is_comissao"));
+				
+				ConviteDAO conviteDAO = new ConviteDAO();
+				Convite c = conviteDAO.selecionaAceitoById(f.getId());
+				
+				if(c != null) {
+					f.setTurma(c.getTurma());
+				}
+			}
+		} catch (SQLException se) {
+			System.err.println("Erro de SQL: " + se);
+		} catch(Exception e) {
+			System.err.println("Erro: " + e);
+		}
+		
+		ConexaoMySQL.fecharConexao();
+		return f;
+	}
+
+	public void atualizarIsComissao(Integer id_formando, Boolean flag) {
+		conexao = ConexaoMySQL.getConexao();
+		
+		try {
+			ps = conexao.prepareCall("UPDATE formando SET is_comissao = ? WHERE id = ?");
+		
+			ps.setBoolean(1, flag);
+			ps.setInt(2, id_formando);
+					
+			ps.execute();
+		} catch (SQLException se) {
+			System.err.println("Erro de SQL: " + se);
+		} catch(Exception e) {
+			System.err.println("Erro: " + e);
+		}
+		
+		ConexaoMySQL.fecharConexao();		
 	}
 }

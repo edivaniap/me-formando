@@ -46,6 +46,10 @@ public class Convite {
 		this.turma = turma;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Convite para turma: " + turma.getTitulo() + " - " + turma.getSemestre_formacao() + " - " + turma.getInstituicao() + "\n"
+				+ "Por: " + super_formando.getpNome() + " " + super_formando.getuNome() + " - " + super_formando.getEmail();
+	}
 
 }
